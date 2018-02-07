@@ -1,3 +1,4 @@
+from matplotlib import pyplot as plt 
 from cv2 import imread
 import numpy as np
 
@@ -11,6 +12,7 @@ def getImage(i, source, main_dir):
 
     img = imread(main_dir + source + '\\' + name, 0)
     img = img.reshape((img.shape[0], img.shape[1], 1))
+    img = img.reshape(224, 224, 1)
     img = img.astype('float32')
     img /= 255
     return img
@@ -27,13 +29,15 @@ def getData(end, start=0):
 
 def getUnetData(end, start=0, dir='data\\unet\\'): #data/unet/imgs/1.jpg
     imgs = []
-    img_src = 'imgs'
+    img_src1 = 'imgs\\1'
+    img_src2 = 'imgs\\2'
 
     for i in range(start, end):
-        image1 = getImage(i, img_src, dir)
-        image2 = getImage(i+1, img_src, dir)
+        image1 = getImage(i, img_src1, dir)
+        image2 = getImage(i, img_src2, dir)
         image1 = image1.reshape((224, 224, 1))
         image2 = image2.reshape((224, 224, 1))
+
         image = np.concatenate([image1, image2], axis=2)
         imgs.append(image)
         
@@ -45,7 +49,6 @@ def getLabels(end, start=0, dir='data\\ynet\\'): #data/ynet/labels
     label_src = 'labels'
 
     for i in range(start, end):
-        i+=1
         labels.append(getImage(i, label_src, dir))
 
     labels = np.array(labels)
@@ -59,7 +62,6 @@ def getYnetData(end, start=0, main_dir='data\\ynet\\'): #data/ynet/imgs/1.jpg
     audios = []
 
     for i in range(start, end):
-        i+=1
         imgs.append(getImage(i, img_src, main_dir))
         audios.append(getImage(i, audio_src, main_dir))
         
