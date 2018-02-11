@@ -1,43 +1,16 @@
-import cv2
-from hussam_data import getData
-import numpy as np
-from matplotlib import pyplot as plt
+import tensorflow as tf
 
-def testHussamData():
+# Simple hello world using TensorFlow
 
-    i, l = getData(30, 29)
+# Create a Constant op
+# The op is added as a node to the default graph.
+#
+# The value returned by the constructor represents the output
+# of the Constant op.
+hello = tf.constant('Hello, TensorFlow!')
 
-    yimg = i[0]
-    yaud = i[1]
-    uimg = i[2]
-    limg = l
+# Start tf session
+sess = tf.Session()
 
-    uimg1, uimg2 = np.split(uimg, 2, axis=2)
-
-    yimg = yimg.reshape((224, 224))
-    yaud = yaud.reshape((224, 224))
-    uimg1 = uimg1.reshape((224, 224))
-    uimg2 = uimg2.reshape((224, 224))
-    limg = limg.reshape((224, 224))
-
-    print(yimg.shape, yaud.shape, uimg1.shape, uimg2.shape, limg.shape)
-    
-    plt.imshow(yimg)
-    plt.savefig('out\\yimg.jpg')
-
-    plt.imshow(yaud)
-    plt.savefig('out\\yaud.jpg')
-
-    plt.imshow(uimg1)
-    plt.savefig('out\\uimg1.jpg')
-
-    plt.imshow(uimg2)
-    plt.savefig('out\\uimg2.jpg')
-
-    plt.imshow(limg)
-    plt.savefig('out\\limg.jpg')
-
-testHussamData()
-    
-
-
+# Run the op
+print(sess.run(hello))

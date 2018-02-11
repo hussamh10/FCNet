@@ -1,5 +1,5 @@
 import os 
-#os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import numpy as np
 from keras.models import *
 from keras.layers import Input, merge, Conv2D, MaxPooling2D, UpSampling2D, Dropout, Cropping2D
@@ -13,7 +13,7 @@ from ynet import get_unet as getYnet
 from hussam_data import getData
 
 def load_data():
-    imgs_train, labels_train = getData(end = 400, start=1)
+    imgs_train, labels_train = getData(end = 20, start=1)
     imgs_test, labels_test = getData(200, start = 190)
 
     return imgs_train, labels_train, imgs_test
