@@ -6,7 +6,7 @@ from keras.layers import Input, merge, Conv2D, MaxPooling2D, UpSampling2D, Dropo
 from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler, TensorBoard
 from keras import backend as keras
-from hussam_data import getData as gd
+from generator import generate
 
 def getFCNet():
 
@@ -33,17 +33,13 @@ def getFCNet():
     return model
 
 def train():
-    i, l = gd(start = 1, end = 200)
-
     TensorBoard(log_dir='./Graph', histogram_freq=0, 
             write_graph=True, write_images=True)
 
     tbCallBack = TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
-
     model = getFCNet()
-
     model_checkpoint = ModelCheckpoint('fcnet.hdf5', monitor='loss',verbose=1, save_best_only=True)
+    model.fit_generator(generate(100), steps_per_epoch=10, epochs=300, verbose=1, callbacks=[model_checkpoint, tbCallBack])
 
-    model.fit(i, l, batch_size=1, epochs=1000, verbose=1,validation_split=0.2, shuffle=True, callbacks=[tbCallBack, model_checkpoint])
 
 train()

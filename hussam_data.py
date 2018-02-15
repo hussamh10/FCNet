@@ -28,8 +28,6 @@ def getData(end, start=0):
 def getInputs(end, start=0, dir='data\\'): #data/unet/imgs/1.jpg
     imgs1 = []
     imgs2 = []
-    img_src1 = 'enet_out\\'
-    img_src2 = 'ynet_out\\'
 
     for i in range(start, end):
         imgs1.append(getImage(i, img_src1, dir, '.png'))
